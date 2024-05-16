@@ -1,0 +1,42 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container">
+    <div class="row py-2 justify-content-center">
+        <div class="col-md-6 mb-4">
+            <form method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search products..." aria-label="Search products" aria-describedby="button-search" name="searchQuery" value="@Model.SearchQuery">
+                    <button class="btn btn-secondary" type="submit" id="button-search">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row py-2">
+        @if (Model != null && Model.ProductViewModel != null && Model.ProductViewModel.Products != null)
+        {
+            @foreach (var product in Model.ProductViewModel.Products)
+            {
+                <div class="col-md-3 mb-4">
+                    <a href="@Url.Page("Detail", new { id = product.Id })" style="color: inherit; text-decoration: none;">
+                        <div style="position:relative;overflow:hidden;padding-bottom:100%;">
+                            <img src="@product.Thumbnail" style="position:absolute" class="card-img-top img-fluid img-square" alt="@product.Title">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Title</h5>
+                            <p class="card-text">Price: $@product.Price</p>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No products available.</p>
+        }
+    </div>
+</div>

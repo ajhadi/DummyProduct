@@ -1,0 +1,38 @@
+﻿@page
+@model DummyProduct.Pages.CartModel
+@{
+}
+
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-md-12">
+            <h2>Your Cart</h2>
+            @if (Model != null && Model.CartViewModel.Cart != null && Model.CartViewModel.Cart.Any())
+            {
+                <table class="table">
+                    <tbody>
+                        @foreach (var cart in Model.CartViewModel.Cart)
+                        {
+                            <tr>
+                                <td><img src="@cart.Product.Thumbnail" alt="Thumbnail" style="max-width: 50px; max-height: 50px;"></td>
+                                <td>@cart.Product.Title</td>
+                                <td>$@cart.Product.Price</td>
+                                <td style="text-align: right;">
+                                    <form method="post" asp-page-handler="Delete" asp-route-id="@cart.Id">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <p>Total Price: $@Model.CartViewModel.TotalPrice</p>
+            }
+            else
+            {
+                <p>No products in the cart.</p>
+            }
+        </div>
+    </div>
+</div>
